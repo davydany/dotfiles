@@ -1,0 +1,51 @@
+"" Configure Vundle
+set nocompatible                " be iMproved, required
+filetype off                    " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" My Bundles
+Plugin 'gmarik/Vundle.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'sickill/vim-monokai'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+"" Close Vundle Commands
+call vundle#end()
+filetype plugin indent on
+
+"" Configure Solarized
+syntax enable
+colorscheme monokai
+
+let mapleader = ","
+nmap <leader>ne :NERDTree<cr>
+
+set nu
+set smarttab
+set expandtab
+set autoindent
+
+set nocompatible                " choose no compatibility with legacy vi
+set ruler
+syntax enable
+set encoding=utf-8
+set showcmd                     " display incomplete commands
+filetype plugin indent on       " load file type plugins + indentation
+
+"" Whitespace
+set nowrap                      " don't wrap lines
+set tabstop=4 shiftwidth=4      " a tab is two spaces (or set this to 4)
+set expandtab                   " use spaces, not tabs (optional)
+set backspace=indent,eol,start  " backspace through everything in insert mode
+
+"" Searching
+set hlsearch                    " highlight matches
+set incsearch                   " incremental searching
+set ignorecase                  " searches are case insensitive...
+set smartcase                   " ... unless they contain at least one capital letter
