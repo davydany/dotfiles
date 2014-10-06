@@ -1,0 +1,15 @@
+
+# setup proxy
+export NO_PROXY=''
+proxy_user='e002515'
+proxy_pass='BLUE6-rides'
+proxy_host='192.168.90.226'
+proxy_port='8080'
+function setproxy() {
+    export {http,https,ftp}_proxy="http://$proxy_user:$proxy_pass@$proxy_host:$proxy_port"
+}
+
+# Unset Proxy
+function unsetproxy() {
+    unset {http,https,ftp}_proxy
+}
