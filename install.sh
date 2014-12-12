@@ -3,9 +3,11 @@ pwd=`pwd`
 # setup bash
 echo "Setting up 'bash'"
 ln -sf $pwd/bash/bashrc ~/.bashrc
+touch ~/.work.bashrc
 
 # setup vim
 echo "Setting up 'vim'"
+yes | pip install jedi
 ln -sf $pwd/vim/vimrc ~/.vimrc
 [ -d ~/.vim/bundle/Vundle.vim ] && rm -rf ~/.vim/bundle/Vundle.vim 
 mkdir -p ~/.vim/bundle

@@ -1,10 +1,10 @@
 
 # setup proxy
 export NO_PROXY=''
-proxy_user='e002515'
-proxy_pass='BLUE6-rides'
-proxy_host='192.168.90.226'
-proxy_port='8080'
+proxy_user=''
+proxy_pass=''
+proxy_host=''
+proxy_port=''
 function setproxy() {
     export {http,https,ftp}_proxy="http://$proxy_user:$proxy_pass@$proxy_host:$proxy_port"
 }
@@ -13,3 +13,16 @@ function setproxy() {
 function unsetproxy() {
     unset {http,https,ftp}_proxy
 }
+
+# VirtualEnv Setup
+export WORKON_HOME=~/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Aliases
+alias pyc="find . -name '*.pyc' -delete"
+alias n="nosetests"
+alias nx="nosetests -x"
+alias nxp="nosetests -x --pdb"
+
+# source work bashrc
+source ~/.work.bashrc
