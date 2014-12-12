@@ -14,6 +14,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'davidhalter/jedi-vim'
 
 "" Close Vundle Commands
 call vundle#end()
