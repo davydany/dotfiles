@@ -1,0 +1,14 @@
+[distutils]
+index-servers = 
+    pypi # the live PyPI
+    pypitest # the test PyPI
+
+[pypi] # auth for the live PyPI
+repository: https://pypi.python.org/pypi
+username:
+password: 
+
+[pypitest] # auth for the test PyPI
+repository: https://testpypi.python.org/pypi
+username:
+password:

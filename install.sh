@@ -23,3 +23,7 @@ if which zsh > /dev/null; then
 else
 	echo "ZSH not installed. Not setting it up. Run this after setting up ZSH."
 fi
+
+# setup pypi
+echo "Setting up PyPI"
+ln -sf $pwd/pypi/pypirc ~/.pypirc
