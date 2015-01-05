@@ -30,7 +30,9 @@ ln -sf $pwd/pypi/pypirc ~/.pypirc
 
 # setup homebrew
 echo "Setting up Homebrew"
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if [ `uname` == "Darwin" ]; then
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
 
 # setup iterm2
 ln -s $pwd/iterm2/inputrc ~/.inputrc
