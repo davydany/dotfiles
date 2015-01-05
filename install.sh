@@ -27,3 +27,11 @@ fi
 # setup pypi
 echo "Setting up PyPI"
 ln -sf $pwd/pypi/pypirc ~/.pypirc
+
+# setup homebrew
+echo "Setting up Homebrew"
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# setup iterm2
+ln -s $pwd/iterm2/inputrc ~/.inputrc
+

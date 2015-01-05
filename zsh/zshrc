@@ -80,3 +80,8 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/Users/da
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 source ~/.bashrc
+
+# setup iterm2
+bindkey -e
+bindkey '^[[1;9C' forward-word
+bindkey '^[[1;9D' backward-word
