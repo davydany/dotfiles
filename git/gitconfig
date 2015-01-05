@@ -5,7 +5,7 @@
     #external = /bin/git-diff.sh
 [user]
 	name = David Daniel
-	email = ddaniel@42six.com
+	email = davydany@gmail.com
 [core]
 	editor = vim
 	autocrlf = false
