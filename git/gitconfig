@@ -1,0 +1,11 @@
+[merge]
+	tool = opendiff
+[diff]
+    #tool = opendiff
+    #external = /bin/git-diff.sh
+[user]
+	name = David Daniel
+	email = ddaniel@42six.com
+[core]
+	editor = vim
+	autocrlf = false

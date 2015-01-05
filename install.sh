@@ -37,3 +37,5 @@ fi
 # setup iterm2
 ln -s $pwd/iterm2/inputrc ~/.inputrc
 
+# setup git
+ln -s $pwd/git/gitconfig ~/.gitconfig
