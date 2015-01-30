@@ -22,6 +22,7 @@ export WORKON_HOME=~/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
 # Aliases
+## python
 alias pyc="find . -name '*.pyc' -delete"
 alias n="nosetests"
 alias nx="nosetests -x"
