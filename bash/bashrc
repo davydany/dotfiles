@@ -27,6 +27,8 @@ alias pyc="find . -name '*.pyc' -delete"
 alias n="nosetests"
 alias nx="nosetests -x"
 alias nxp="nosetests -x --pdb"
+alias pypi_register='python setup.py sdist upload -r $1'
+alias pypi_upload='python setup.py sdist upload -r $1'
 
 # source work bashrc
 source ~/.work.bashrc
