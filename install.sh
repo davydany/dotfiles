@@ -5,6 +5,14 @@ echo "Setting up 'bash'"
 ln -sf $pwd/bash/bashrc ~/.bashrc
 touch ~/.work.bashrc
 
+# setup pypi
+echo "Setting up PyPI"
+if [ -z "`which pip`" ]
+then
+    curl https://bootstrap.pypa.io/get-pip.py | sudo python
+    pip install virtualenvwrapper
+fi
+
 # setup vim
 echo "Setting up 'vim'"
 yes | sudo pip install jedi
@@ -23,10 +31,6 @@ if which zsh > /dev/null; then
 else
 	echo "ZSH not installed. Not setting it up. Run this after setting up ZSH."
 fi
-
-# setup pypi
-echo "Setting up PyPI"
-ln -sf $pwd/pypi/pypirc ~/.pypirc
 
 # setup homebrew
 echo "Setting up Homebrew"
