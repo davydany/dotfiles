@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+  # setup some basic stuff
+  - homebrew: name=brew-cask state=latest
+
+  # setup docker 
+  - homebrew: name=docker state=latest
+  - homebrew: name=boot2docker state=latest
+  - homebrew: name=vim state=latest
+  - homebrew: name=wget state=latest

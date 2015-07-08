@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+
+  - homebrew: name=go state=latest
+  - homebrew: name=thrift state=latest
+  - homebrew: name=maven  state=latest
+  - homebrew: name=rpm state=latest
+  - homebrew: name=zookeeper state=latest
