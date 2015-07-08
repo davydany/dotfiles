@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  vars:
+  - dotfiles_home: "~/.dotfiles"
+  tasks:
+  - pip: name=pip state=latest
+  - pip: name=virtualenv state=latest
+  - pip: name=virtualenvwrapper state=latest
+  - pip: name=jedi state=latest
+  - shell: "{{ dotfiles_home }}/scripts/install.sh"

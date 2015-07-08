@@ -5,14 +5,6 @@ echo "Setting up 'bash'"
 ln -sf $pwd/bash/bashrc ~/.bashrc
 touch ~/.work.bashrc
 
-# setup pypi
-echo "Setting up PyPI"
-if [ -z "`which pip`" ]
-then
-    curl https://bootstrap.pypa.io/get-pip.py | sudo python
-    pip install virtualenvwrapper
-fi
-
 # setup vim
 echo "Setting up 'vim'"
 yes | sudo pip install jedi
