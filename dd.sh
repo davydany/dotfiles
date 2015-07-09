@@ -45,8 +45,6 @@ basic_install() {
     # yes | rm -rf ./ansible;
     if [ "$(uname)" == "Darwin" ]; then
         if ! type "brew" > /dev/null; then 
-            notify "Revoking sudo access."
-            _ sudo -k 
             notify "Homebrew isn't installed. Attempting to install Homebrew."
             _ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
             notify "Homebrew should have been installed. Please run this script again with sudo access."
