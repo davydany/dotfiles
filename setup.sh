@@ -24,25 +24,26 @@ notify() { echo -e "\n${WHITE}[NOTIFY] $@${NC}"; }
 _() { echo -e "\n${GREEN}\$ $@" ; "$@" ; echo -e "${NC}" ; }             
 
 notify "Removing old '.dotfiles'...";
-yes | rm -r ~/.dotfiles
+_ yes | rm -r ~/.dotfiles
 
 notify "Cloning fresh copy of davydany/dotfiles to ~/.dotfiles...";
-git clone https://github.com/davydany/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+_ git clone https://github.com/davydany/dotfiles.git ~/.dotfiles
+_ cd ~/.dotfiles
 
 notify "Setting up proper permissions before running...";
-chmod +x ./dd.sh
+_ chmod +x ./dd.sh
 
 notify "Executing Pre-Install Setup...";
-sudo ./dd.sh setup
+notify "You will need to enter your password for sudo access."
+_ sudo ./dd.sh setup
 
 notify "Executing Installation...";
-./dd.sh install
+_ ./dd.sh install
 
 notify "Executing Configuration step WITH Root privileges...";
-sudo ./dd.sh configure
+_ sudo ./dd.sh configure
 
 notify "Executing Configuration step WITHOUT Root privileges...";
-./dd.sh configure
+_ ./dd.sh configure
 
 notify "Done."
