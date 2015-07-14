@@ -5,10 +5,7 @@
   - dotfiles_home: "~/.dotfiles"
   tasks:
   - debug: msg="user is {{ user }}; user_home {{ user_home }}; OS {{ ansible_os_family }}"
-  # - pip: name=pip state=latest
-  # - pip: name=virtualenv state=latest
-  # - pip: name=virtualenvwrapper state=latest
-  # - pip: name=jedi state=latest
+
 
   # setup bashrc
   - file: src=~/.dotfiles/data/{{ item.path }} dest=~/{{ item.dst }} force=yes state=link
@@ -20,3 +17,14 @@
       - { path: 'pypi/pypirc', dst: '.pypirc' }
       - { path: 'vim/vimrc', dst: '.vimrc' }
       - { path: 'zsh/zshrc', dst: '.zshrc' }
+
+- hosts: localhost
+  remote_user: root
+  tasks:
+  - name: Install Common Packages from pip
+    pip: name={{ item.name }} state={{ item.state }}
+    with_items: 
+      - { name: pip, state: latest }
+      - { name: virtualenv, state: latest }
+      - { name: virtualenvwrapper, state: latest }
+      - { name: jedi, state: latest }
