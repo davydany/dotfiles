@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  remote_user: root
+  tasks:
+  - name: "Tell the user nothing is available."
+    debug: msg="No Work Tasks Available for Linux."

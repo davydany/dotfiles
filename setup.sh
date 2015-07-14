@@ -1,4 +1,6 @@
-                                                                         
+
+PURPLE="\033[0;35m"
+NC="\033[0m" # No Color
 
 # initialization                                                         
 BLACK="\033[0;30m"    
@@ -21,10 +23,12 @@ NC="\033[0m" # No Color
 
 error() { echo -e "\n${RED}[ERROR]  $@ {NC}"; }                          
 notify() { echo -e "\n${WHITE}[NOTIFY] $@${NC}"; }                       
-_() { echo -e "\n${GREEN}\$ $@" ; "$@" ; echo -e "${NC}" ; }             
+_() { echo -e "\n${GREEN}\$ $@" ; "$@" ; echo -e "${NC}" ; } 
+
+export USER=`whoami`            
 
 notify "Removing old '.dotfiles'...";
-_ yes | rm -r ~/.dotfiles
+_ yes | rm -rf ~/.dotfiles
 
 notify "Cloning fresh copy of davydany/dotfiles to ~/.dotfiles...";
 _ git clone https://github.com/davydany/dotfiles.git ~/.dotfiles
@@ -34,16 +38,13 @@ notify "Setting up proper permissions before running...";
 _ chmod +x ./dd.sh
 
 notify "Executing Pre-Install Setup...";
-notify "You will need to enter your password for sudo access."
-_ sudo ./dd.sh setup
+notify "You MAY need to enter your password for sudo access."
+_ sudo ./dd.sh setup $USER
 
 notify "Executing Installation...";
-_ ./dd.sh install
-
-notify "Executing Configuration step WITH Root privileges...";
-_ sudo ./dd.sh configure
+_ ./dd.sh install $USER
 
 notify "Executing Configuration step WITHOUT Root privileges...";
-_ ./dd.sh configure
+_ ./dd.sh configure $USER
 
 notify "Done."

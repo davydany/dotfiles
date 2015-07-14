@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ACTION=$1;
+USER=$2;
 
 # initialization
 BLACK="\033[0;30m"
@@ -22,7 +23,7 @@ WHITE="\033[1;37m"
 NC="\033[0m" # No Color
 
 error() { echo -e "\n${RED}[ERROR]  $@ {NC}"; }
-notify() { echo -e "\n${WHITE}[NOTIFY] $@${NC}"; }
+notify() { echo -e "${WHITE}[NOTIFY] $@${NC}"; }
 _() { echo -e "\n${GREEN}\$ $@" ; "$@" ; echo -e "${NC}" ; }
 
 
@@ -41,6 +42,12 @@ if [ -d "./ansible" ]; then
 fi
 
 # utility methods
+print_usage() {
+    notify "Usage"
+    notify "$: dd.sh \"(setup|install|configure)\" <USER>"
+    notify "NOTE: \"dd.sh setup <USER>\" must be run as root."
+}
+
 basic_install() {
     # yes | rm -rf ./ansible;
     if [ "$(uname)" == "Darwin" ]; then
@@ -55,6 +62,10 @@ basic_install() {
             notify "You're not running this on a Redhat/Centos system."
             notify "This script only supports Mac or Redhat/Centos at the moment."
             exit;
+        fi
+
+        if ! type "pip" > /dev/null; then 
+            yum install -y python-pip;
         fi
     elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
         # Do something under Windows NT platform
@@ -80,24 +91,17 @@ install() {
 }
 
 setup_ssh() {
-    if [ "$(uname)" == "Darwin" ]; then
-        export user_home="$HOME";
-    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-        export user_home="/root";  
-    fi
     
-    if [ ! -d "$user_home/.ssh" ]; then
-        _ mkdir $user_home/.ssh;
+    if [ ! -d "$HOME/.ssh" ]; then
+        _ mkdir $HOME/.ssh;
     fi
 
-    if [ ! -f "$user_home/.ssh/id_rsa.pub" ]; then
-        _ cd $user_home/.ssh;
+    if [ ! -f "$HOME/.ssh/id_rsa.pub" ]; then
+        _ cd $HOME/.ssh;
         _ ssh-keygen -t rsa -f id_rsa -P '';
     fi
 
-    if [ ! -f "$user_home/.ssh/authorized_keys" ]; then 
-        _ cat $user_home/.ssh/id_rsa.pub > $user_home/.ssh/authorized_keys;
-    fi
+    _ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys;
 }
 
 # pre-launch checks
@@ -118,6 +122,15 @@ runchecks() {
     fi
 }
 
+
+# check that user is passed in...
+if [ "$USER" == "" ]; then 
+    error "You need to provide the user.";
+    print_usage;
+    exit -1;
+fi;
+
+# run...
 if [ "$ACTION" == "setup" ]; then
     if [ "$EUID" -ne 0 ]; then
         error "You can run setup only as root user."
@@ -163,31 +176,48 @@ elif [ "$ACTION" == "configure" ]; then
     _ cd $ANSIBLE_HOME;
     _ source ./hacking/env-setup
 
+    if [ "$(uname)" == "Darwin" ]; then
 
-    if [ "$EUID" -ne 0 ]; then   
-        # non sudo actions 
-        if [ "$(uname)" == "Darwin" ]; then
-            _ ansible-playbook -i "localhost," -c local ../playbooks/mac_playbook.yml;
-            _ ansible-playbook -i "localhost," -c local ../playbooks/work_mac_playbook.yml;
+        _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/all.yml
+        _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/mac.yml
+        _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/mac.work.yml
 
-        elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-            echo "No Non-Sudo Linux Tasks."
-        fi
-    else 
+    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 
-        # sudo actions
-        if [ "$(uname)" == "Darwin" ]; then
-
-            _ ansible-playbook -i "localhost," -c local ../playbooks/default.yml;
-
-        elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-
-            _ ansible-playbook -i "localhost," -c local ../playbooks/default.yml;
-            _ ansible-playbook -i "localhost," -c local ../playbooks/linux_playbook.yml;
-            _ ansible-playbook -i "localhost," -c local ../playbooks/work_linux_playbook.yml;
-
-        fi
+        _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/all.yml
+        _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/linux.yml
+        _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/linux.work.yml
     fi
+
+
+    # if [ "$EUID" -ne 0 ]; then   
+    #     # non sudo actions 
+    #     if [ "$(uname)" == "Darwin" ]; then
+    #         _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/default.yml;
+    #         _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/mac_playbook.yml;
+    #         _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/work_mac_playbook.yml;
+
+    #     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    #         echo "No Non-Sudo Linux Tasks."
+    #     fi
+    # else 
+
+    #     # sudo actions
+    #     if [ "$(uname)" == "Darwin" ]; then
+
+    #         _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/default.yml;
+
+    #     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+
+    #         _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/default.yml;
+    #         _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/linux_playbook.yml;
+    #         _ ansible-playbook -e user=$USER -i "localhost," -c local ../playbooks/work_linux_playbook.yml;
+
+    #     fi
+    # fi
+
+
+
     # else
     #     error "You can't call as a sudo-user but have the ability to go sudo."
     #     exit -1;
@@ -195,8 +225,7 @@ elif [ "$ACTION" == "configure" ]; then
 
 else
     error "Invalid action provided."
-    echo "Usage: dd.sh (setup|install|configure)";
-    echo "NOTE: dd.sh setup must be run as root."
+    print_usage;
     exit;
 fi;
 

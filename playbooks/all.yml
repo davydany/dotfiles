@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  vars:
+  - user_home: "/home/{{ user }}"
+  - dotfiles_home: "~/.dotfiles"
+  tasks:
+  - debug: msg="user is {{ user }}; user_home {{ user_home }}; OS {{ ansible_os_family }}"
+  # - pip: name=pip state=latest
+  # - pip: name=virtualenv state=latest
+  # - pip: name=virtualenvwrapper state=latest
+  # - pip: name=jedi state=latest
+
+  # # setup bashrc
+  # - file: src=~/.dotfiles/data/{{ item.path }} dest=~/.{{ item.dst }} force=yes state=link
+  #   with_items:
+  #     - { path: 'bash/bashrc', dst: 'bashrc' }
+  #     - { path: 'bash/bashrc', dst: 'bash_profile' }
