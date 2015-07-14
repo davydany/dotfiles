@@ -2,8 +2,17 @@
 - hosts: localhost
   remote_user: root
   tasks:
+  - name: Installing the latest version of VIM
+    yum: 
+      pkg: vim 
+      state: latest
 
-  - name: Downloading and enable the EPEL repository definitions.
-    action: command rpm -Uvh --replacepkgs http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+  - name: Installing the latest version of Nano
+    yum:
+      pkg: nano 
+      state: latest
 
-  - yum: name=docker state=latest
+  - name: Installing the latest verison of Docker
+    yum: 
+      pkg: docker 
+      state: latest

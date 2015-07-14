@@ -10,8 +10,13 @@
   # - pip: name=virtualenvwrapper state=latest
   # - pip: name=jedi state=latest
 
-  # # setup bashrc
-  # - file: src=~/.dotfiles/data/{{ item.path }} dest=~/.{{ item.dst }} force=yes state=link
-  #   with_items:
-  #     - { path: 'bash/bashrc', dst: 'bashrc' }
-  #     - { path: 'bash/bashrc', dst: 'bash_profile' }
+  # setup bashrc
+  - file: src=~/.dotfiles/data/{{ item.path }} dest=~/{{ item.dst }} force=yes state=link
+    with_items:
+      - { path: 'data/bash/bashrc', dst: '.bashrc' }
+      - { path: 'data/bash/bashrc', dst: '.bash_profile' }
+      - { path: 'data/git/gitconfig', dst: '.gitconfig'}
+      - { path: 'data/iterm2/inputrc', dst: '.inputrc' }
+      - { path: 'data/pypi/pypirc', dst: '.pypirc' }
+      - { path: 'data/vim/vimrc', dst: '.vimrc' }
+      - { path: 'data/zsh/zshrc', dst: '.zshrc' }
