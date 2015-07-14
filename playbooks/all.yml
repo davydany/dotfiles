@@ -13,10 +13,10 @@
   # setup bashrc
   - file: src=~/.dotfiles/data/{{ item.path }} dest=~/{{ item.dst }} force=yes state=link
     with_items:
-      - { path: 'data/bash/bashrc', dst: '.bashrc' }
-      - { path: 'data/bash/bashrc', dst: '.bash_profile' }
-      - { path: 'data/git/gitconfig', dst: '.gitconfig'}
-      - { path: 'data/iterm2/inputrc', dst: '.inputrc' }
-      - { path: 'data/pypi/pypirc', dst: '.pypirc' }
-      - { path: 'data/vim/vimrc', dst: '.vimrc' }
-      - { path: 'data/zsh/zshrc', dst: '.zshrc' }
+      - { path: 'bash/bashrc', dst: '.bashrc' }
+      - { path: 'bash/bashrc', dst: '.bash_profile' }
+      - { path: 'git/gitconfig', dst: '.gitconfig'}
+      - { path: 'iterm2/inputrc', dst: '.inputrc' }
+      - { path: 'pypi/pypirc', dst: '.pypirc' }
+      - { path: 'vim/vimrc', dst: '.vimrc' }
+      - { path: 'zsh/zshrc', dst: '.zshrc' }
