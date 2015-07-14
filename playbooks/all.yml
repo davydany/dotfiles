@@ -17,6 +17,7 @@
       - { path: 'pypi/pypirc', dst: '.pypirc' }
       - { path: 'vim/vimrc', dst: '.vimrc' }
       - { path: 'zsh/zshrc', dst: '.zshrc' }
+      - { path: 'tmux/tmux.conf', dst: '.tmux.conf' }
 
 - hosts: localhost
   remote_user: root
