@@ -27,6 +27,9 @@ _() { echo -e "\n${GREEN}\$ $@" ; "$@" ; echo -e "${NC}" ; }
 
 export USER=`whoami`            
 
+notify "Installing base requirements"
+_ pip install wheels/*
+
 notify "Removing old '.dotfiles'...";
 _ yes | rm -rf ~/.dotfiles
 
