@@ -15,6 +15,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 "" Close Vundle Commands
 call vundle#end()
@@ -57,3 +58,11 @@ nmap <silent> <c-k> :wincmd k<CR>
 nmap <silent> <c-j> :wincmd j<CR>                                                                                                                       
 nmap <silent> <c-h> :wincmd h<CR>                                                                                                                       
 nmap <silent> <c-l> :wincmd l<CR>
+
+"" Powerline
+set  rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
+set laststatus=2
+set t_Co=256
+
+"" Mouse Settings
+set mouse=a
