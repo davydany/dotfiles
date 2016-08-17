@@ -16,6 +16,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'vim-ruby/vim-ruby'
 
 "" Close Vundle Commands
 call vundle#end()
@@ -25,8 +26,11 @@ filetype plugin indent on
 syntax enable
 colorscheme monokai
 
+"" Configure NERDTree
 let mapleader = ","
 nmap <leader>ne :NERDTree<cr>
+let NERDTreeShowHidden=1
+autocmd VimEnter * NERDTree
 
 set nu
 set smarttab
@@ -51,6 +55,7 @@ set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
+set wildmode=longest,list,full  " sets tab autocomplete
 
 "" Switching Windows
 " Use ctrl-[hjkl] to select the active split!
@@ -66,3 +71,7 @@ set t_Co=256
 
 "" Mouse Settings
 set mouse=a
+
+"" Configurations specific for ruby
+imap <S-CR> <CR><CR>end<Esc>-cc
+
