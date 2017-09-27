@@ -1,1 +1,1 @@
-pycrypto==2.6.1
+sultan > 0.6

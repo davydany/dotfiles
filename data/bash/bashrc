@@ -35,49 +35,6 @@ function unsetproxy() {
     unset {http,https,ftp}_proxy
 }
 
-# Java Setup
-if [ -d "/usr/libexec/java_home" ]
-then
-    export JAVA_HOME=$(/usr/libexec/java_home)
-fi
-
-# VirtualEnv Setup
-export WORKON_HOME=~/.virtualenvs
-if [ -f "/usr/bin/virtualenvwrapper.sh" ]
-then 
-    source /usr/bin/virtualenvwrapper.sh;
-fi
-
-if [ -f "/usr/local/bin/virtualenvwrapper.sh" ]
-then
-    source /usr/local/bin/virtualenvwrapper.sh;
-fi
-
-# Aliases
-
-# mac
-alias pc="pwd | pbcopy"
-alias notify='$@ && echo ""; echo "Process Completed." | terminal-notifier -sound default'
-
-## python
-alias pyc="find . -name '*.pyc' -delete"
-alias n="nosetests"
-alias nx="nosetests -x"
-alias nxp="nosetests -x --pdb"
-alias pypi_register='python setup.py sdist upload -r $1'
-alias pypi_upload='python setup.py sdist upload -r $1'
-
-# docker-machine
-eval "$(docker-machine env default)"
-
-# source work bashrc
-source ~/.work.bashrc
-
-# z
-source `brew --prefix`/etc/profile.d/z.sh
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
 # vagrant
 alias vsh="vagrant ssh"
 alias vup="vagrant up"
@@ -91,11 +48,3 @@ alias vsnap="vagrant snap"
 
 # network tools
 alias list_listening='netstat -an -ptcp | grep LISTEN'
-
-# for macports
-export PATH=/opt/local/bin:$PATH
-
-# for python2.7
-export PATH=/usr/local/Cellar/python/2.7.10_2/bin:$PATH
-export CLICOLOR
-export CLICOLOR

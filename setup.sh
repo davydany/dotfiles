@@ -25,29 +25,48 @@ error() { echo -e "\n${RED}[ERROR]  $@ {NC}"; }
 notify() { echo -e "\n${WHITE}[NOTIFY] $@${NC}"; }                       
 _() { echo -e "\n${GREEN}\$ $@" ; "$@" ; echo -e "${NC}" ; } 
 
-export USER=`whoami`            
+# # setup preliminary libraries
+# if [ -x "$(which pip)" ]; then
+#     notify "[OK] - pip is installed."
+# else
+#     error "Please ensure 'pip' is installed and available."
+#     exit 1;
+# fi
+# if [ -x "$(which virtualenv)" ]; then
+#     notify "[OK] - virtualenv is installed."
+# else
+#     error "Please ensure 'virtualenv' is installed and available. (pip install virtualenv)"
+#     exit 1;
+# fi
 
-notify "Installing base requirements"
-_ pip install wheels/*
+PYTHON_VERSION="3.6.2"
 
-notify "Removing old '.dotfiles'...";
-_ yes | rm -rf ~/.dotfiles
+# preliminary setup
+if [ -x "$(which pyenv)" ]; then
+    notify "[OK]  - pyenv is installed."
+else
+    notify "[ERR] - pyenv is not installed. Setting it up..."
+    _ curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+fi
 
-notify "Cloning fresh copy of davydany/dotfiles to ~/.dotfiles...";
-_ git clone https://github.com/davydany/dotfiles.git ~/.dotfiles
-_ cd ~/.dotfiles
+export PATH="${HOME}/.pyenv/bin:${PATH}";
+_ eval "$(pyenv init -)"
+_ eval "$(pyenv virtualenv-init -)"
+INSTALLED_PYTHON=$(python --version);
+if [ "${INSTALLED_PYTHON}" == "Python ${PYTHON_VERSION}" ]; then
+    notify "[OK]  - python==${PYTHON_VERSION} installed"
+else
+    notify "[ERR] - Using 'pyenv' to install Python ${PYTHON_VERSION}. Currently installed: |$(python --version)|"
+    _ pyenv install 3.6.2
+fi
 
-notify "Setting up proper permissions before running...";
-_ chmod +x ./dd.sh
+_ pyenv rehash
+_ pyenv local 3.6.2
+_ pip install sultan
+_ python setup.py
 
-notify "Executing Pre-Install Setup...";
-notify "You MAY need to enter your password for sudo access."
-_ sudo ./dd.sh setup $USER
-
-notify "Executing Installation...";
-_ ./dd.sh install $USER
-
-notify "Executing Configuration step WITHOUT Root privileges...";
-_ ./dd.sh configure $USER
-
-notify "Done."
+# # set things up
+# _ virtualenv env
+# _ source ./env/bin/activate
+# _ ./env/bin/pip install -r requirements.txt
+# _ ./env/bin/python setup.py
