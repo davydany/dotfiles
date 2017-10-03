@@ -25,20 +25,6 @@ error() { echo -e "\n${RED}[ERROR]  $@ {NC}"; }
 notify() { echo -e "\n${WHITE}[NOTIFY] $@${NC}"; }                       
 _() { echo -e "\n${GREEN}\$ $@" ; "$@" ; echo -e "${NC}" ; } 
 
-# # setup preliminary libraries
-# if [ -x "$(which pip)" ]; then
-#     notify "[OK] - pip is installed."
-# else
-#     error "Please ensure 'pip' is installed and available."
-#     exit 1;
-# fi
-# if [ -x "$(which virtualenv)" ]; then
-#     notify "[OK] - virtualenv is installed."
-# else
-#     error "Please ensure 'virtualenv' is installed and available. (pip install virtualenv)"
-#     exit 1;
-# fi
-
 PYTHON_VERSION="3.6.2"
 
 # preliminary setup
@@ -64,9 +50,3 @@ _ pyenv rehash
 _ pyenv local 3.6.2
 _ pip install sultan
 _ python setup.py
-
-# # set things up
-# _ virtualenv env
-# _ source ./env/bin/activate
-# _ ./env/bin/pip install -r requirements.txt
-# _ ./env/bin/python setup.py
